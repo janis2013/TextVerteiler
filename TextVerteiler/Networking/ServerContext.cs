@@ -29,9 +29,11 @@ namespace TextVerteiler.Networking
 
         AsyncCallback BeginAcceptSocketCallback;
 
+
+
         public ServerContext(int port, int maxclients, ref List<string> TextStack)
         {
-
+           
             MaxClients = maxclients;
 
             Ip = IPAddress.Any;
@@ -41,6 +43,8 @@ namespace TextVerteiler.Networking
             Clients = new List<ClientContext>(MaxClients);
 
             listener.Start();
+            
+           
 
             BeginAcceptSocketCallback = new AsyncCallback(OnClientConnected);
 
@@ -52,7 +56,6 @@ namespace TextVerteiler.Networking
         {
 
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-
 
             listener.BeginAcceptSocket(BeginAcceptSocketCallback, null);
 
@@ -87,6 +90,7 @@ namespace TextVerteiler.Networking
             {
                 if (client.socket.Connected)
                 {
+                    client.socket.Shutdown(SocketShutdown.Both);
                     client.socket.Close();
                 }
             }

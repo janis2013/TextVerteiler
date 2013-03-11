@@ -106,7 +106,7 @@ namespace TextVerteiler
 
                 IPHostEntry r = Dns.GetHostEntry(IPAddress.Loopback);
 
-                var result = r.AddressList.Where((ipadd) => ipadd.AddressFamily == AddressFamily.InterNetwork).ToList();
+                var result = r.AddressList.Where((ipadd) => ipadd.AddressFamily == AddressFamily.InterNetwork && ipadd.ToString() != "127.0.0.1").ToList();
 
                 if (result.Count >= 1)
                 {
